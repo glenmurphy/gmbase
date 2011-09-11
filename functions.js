@@ -68,13 +68,6 @@ function getPosition(node) {
   }
 }
 
-function shake(node) {
-  node.classList.add('shake');
-  setTimeout(function() {
-    node.classList.remove('shake');
-  }, 1000);
-}
-
 function collapseMap(map) {
   var list = [];
   for (var id in map) {
@@ -106,28 +99,6 @@ function generateModelMap(list) {
   }
   return map;
 }
-
-var ServerTime = {
-  time_offset : 0,
-  offset_history : [],
-
-  // Rolling average offset.
-  update : function(time) {
-    var offset = new Date().getTime() - time;
-    this.offset_history.push(offset);
-    if (this.offset_history.length > 10)
-      this.offset_history = this.offset_history.slice(1);
-    var total = 0;
-    for (var i = 0, old_offset; old_offset = this.offset_history[i]; i++) {
-      total += old_offset;
-    }
-    this.time_offset = total / this.offset_history.length;
-  },
-
-  getTime : function() {
-    return new Date().getTime() - this.time_offset;
-  }
-};
 
 if (typeof exports != 'undefined') {
   exports.collapseMap = collapseMap;
